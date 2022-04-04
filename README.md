@@ -63,8 +63,8 @@ FOR MANIPULATION:
 
 - IN THE FILE:
 ~/catkin_ws/src/turtlebot3_manipulation_simulations/turtlebot3_manipulation_gazebo/launch/turtlebot3_manipulation_gazebo.launch
-INCLUDE BELOW LINE 10 THE FOLLOWING LINE UNCOMMENTED:
-  <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/> -->
+INCLUDE BELOW LINE 10 - ADD THE FOLLOWING CODE WITHIN < >:
+  arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/
 CHANGE THE LINE 24:
     args="-urdf -param robot_description -model robot -x -3.0 -y 1.0 -Y 0.0 -J joint1 0.0 -J joint2 0.0 -J joint3 0.0 -J joint4 0.0 -J gripper 0.0 -J gripper_sub 0.0"/>
 SAVE AND CLOSE THE FILE. 
@@ -96,8 +96,8 @@ FOR MAPING, LOCALIZATION AND NAVIGATION (WITH MANIPULATOR)
 
 - IN THE FILE:
 ~/catkin_ws/src/turtlebot3_manipulation_simulations/turtlebot3_manipulation_gazebo/launch/turtlebot3_manipulation_gazebo.launch
-INCLUDE BELOW LINE 10 THE FOLLOWING LINE UNCOMMENTED:
-  <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/> -->
+INCLUDE BELOW LINE 10 - ADD THE FOLLOWING CODE WITHIN < >:
+  arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/
 CHANGE THE LINE 24:
     args="-urdf -param robot_description -model robot -x -3.0 -y 1.0 -Y 0.0 -J joint1 0.0 -J joint2 0.0 -J joint3 0.0 -J joint4 0.0 -J gripper 0.0 -J gripper_sub 0.0"/>
 SAVE AND CLOSE THE FILE.
