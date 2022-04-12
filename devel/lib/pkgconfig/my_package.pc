@@ -1,8 +1,0 @@
-prefix=/home/abrao/turtle_ws/devel
-
-Name: my_package
-Description: Description of my_package
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
