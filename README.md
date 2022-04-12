@@ -174,8 +174,8 @@ CHANGE THE TURTLEBOT3 WAFFLE-PI CAMERA TO RGBD
 
 REFERENCE - http://gazebosim.org/tutorials?tut=ros_gzplugins#DepthCamera
 
-COPY THE CONTENT OF THE FILE /my_package/urdf/turtlebot3_waffle_pi_for_open_manipulator.gazebo.xacro
-AND PASTE IN THE FOLLOWING:
+COPY THE CAMERA PLUGIN CONTENT (LINES 147-187) OF THE FILE /my_package/urdf/turtlebot3_waffle_pi_for_open_manipulator.gazebo.xacro
+AND REPLACE IN THE FOLLOWING (MAKE A BACKUP OF THE ORIGINAL CONTENT IN CASE OF CHANGE BACK TO RGB):
 
 sudo gedit /opt/ros/noetic/share/turtlebot3_description/urdf/turtlebot3_waffle_pi_for_open_manipulator.gazebo.xacro
 
