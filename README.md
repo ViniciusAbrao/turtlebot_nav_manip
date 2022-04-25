@@ -179,4 +179,19 @@ AND REPLACE IN THE FOLLOWING (MAKE A BACKUP OF THE ORIGINAL CONTENT IN CASE OF C
 
 sudo gedit /opt/ros/noetic/share/turtlebot3_description/urdf/turtlebot3_waffle_pi_for_open_manipulator.gazebo.xacro
 
+____________________________________________________________________________________________________________________________________
+
+FOR USING WITH REAL RGBD CAMERA REALSENSE: 
+https://github.com/IntelRealSense/realsense-ros
+
+sudo apt-get install ros-$ROS_DISTRO-realsense2-camera
+
+SIMPLE LAUNCH: roslaunch realsense2_camera rs_camera.launch
+POINTCLOUDS LAUNCH: roslaunch realsense2_camera demo_pointcloud.launch
+
+____________________________________________________________________________________________________________________________________
+
+RTABMAP - VISUAL SLAM:
+
+sudo apt install ros-noetic-rtabmap-ros
 
