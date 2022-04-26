@@ -195,3 +195,37 @@ RTABMAP - VISUAL SLAM:
 
 sudo apt install ros-noetic-rtabmap-ros
 
+1- SLAM:
+
+touch ~/catkin_ws/src/turtlebot3_manipulation/turtlebot3_manipulation_slam/launch/slam_rtab.launch
+
+chmod +x ~/catkin_ws/src/turtlebot3_manipulation/turtlebot3_manipulation_slam/launch/slam_rtab.launch
+
+copy the content of "/turtlebot_nav_manip/src/my_package/launch/slam_rtab.launch" in the following:
+gedit ~/catkin_ws/src/turtlebot3_manipulation/turtlebot3_manipulation_slam/launch/slam_rtab.launch
+
+
+FOR EACH TERMINAL: cd ~/catkin_ws && source /opt/ros/noetic/setup.bash && source devel/setup.bash && export TURTLEBOT3_MODEL=waffle_pi
+
+TERMINAL 1 (remember to play gazebo): roslaunch turtlebot3_manipulation_gazebo turtlebot3_manipulation_gazebo.launch
+
+TERMINAL 2: roslaunch turtlebot3_manipulation_slam slam_rtab.launch
+
+crtl+C in the TERMINAL 2 and after that: rtabmap-databaseViewer ~/rtabmap.db
+
+2- LOCALIZATION+NAVIGATION:
+
+touch ~/catkin_ws/src/turtlebot3_manipulation/turtlebot3_manipulation_slam/launch/nav_rtab.launch
+
+chmod +x ~/catkin_ws/src/turtlebot3_manipulation/turtlebot3_manipulation_slam/launch/nav_rtab.launch
+
+copy the content of "/turtlebot_nav_manip/src/my_package/launch/nav_rtab.launch" in the following:
+gedit ~/catkin_ws/src/turtlebot3_manipulation/turtlebot3_manipulation_slam/launch/nav_rtab.launch
+
+
+FOR EACH TERMINAL: cd ~/catkin_ws && source /opt/ros/noetic/setup.bash && source devel/setup.bash && export TURTLEBOT3_MODEL=waffle_pi
+
+TERMINAL 1 (remember to play gazebo): roslaunch turtlebot3_manipulation_gazebo turtlebot3_manipulation_gazebo.launch
+
+TERMINAL 2 (add display -> rtabmap_ros -> MapCloud, after click in Download map): 
+roslaunch turtlebot3_manipulation_slam nav_rtab.launch localization:=true
