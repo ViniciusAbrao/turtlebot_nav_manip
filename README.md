@@ -238,11 +238,47 @@ DOWNLOAD THE CONTENT OF THE src_my_object_recognition FOLDER AND PASTE INSIDE YO
 
 COMPILE THE PACKAGES WITH catkin_make
 
-TERMINAL 1: roslaunch pr2_tc_gazebo main_elephant_person.launch
+TERMINAL 1 - PR2 SIMULATION: roslaunch pr2_tc_gazebo main_elephant_person.launch
+(the line 4 of this launch file must be changed to the topic /camera/rgb/image_raw, 
+also in the file simulation_ws/src/yolo_tc/darknet_ros/darknet_ros/config/ros.yaml)
+ps.: the wheights of YOLO are selected in the launch file, line 15 = darknet_ros/config/yolov2-tiny.yaml.
+
+or
+
+TERMINAL 1 - TURTLE SIMULATION (REMEMBER TO PLAY GAZEBO): roslaunch turtlebot3_manipulation_gazebo turtlebot3_manipulation_gazebo.launch
+(in this case the topics are correct defined)
 
 TERMINAL 2: roslaunch my_object_recognition_pkg darknet_ros_3d.launch
 
 Extract Position (must be improved):
 - rosrun my_object_recognition_pkg yolo_3d_data_extraction.py
+(the depth image topic must be selected in the file my_object_recognition_pkg/config/darknet_3d.yaml)
 
+____________________________________________________________________________________________________________________________________
 
+ORB_SLAM3 ROS PACKAGE
+
+git clone https://github.com/UZ-SLAMLab/ORB_SLAM3.git ORB_SLAM3
+
+Install pangolin
+https://github.com/stevenlovegrove/Pangolin
+
+Install opencv 4.4 (or change cmakelist to 4.2)
+
+cd ORB_SLAM3
+chmod +x build.sh
+./build.sh
+
+delete the content and create a src folder inside: /ORB_SLAM3/Examples_old/ROS
+inside the src folder create a orb_slam3 package: catkin_create_pkg orb_slam3 roscpp
+replace the contect of the ros package with the content of this repository's folder turtlebot_nav_manip/src_orb_slam3/orb_slam3/
+
+compile the package in the folder /ORB_SLAM3/Examples_old/ROS: catkin_make
+
+change the parameter "DepthMapFactor: 1.0" in the folder ORB_SLAM3/Examples_old/RGB-D/RealSense_D435i.yaml
+
+TERMINAL 1 (remember to play gazebo): roslaunch turtlebot3_manipulation_gazebo turtlebot3_manipulation_gazebo.launch
+
+TERMINAL 2: rosrun orb_slam3 RGBD ORB_SLAM3/Vocabulary/ORBvoc.txt ORB_SLAM3/Examples_old/RGB-D/RealSense_D435i.yaml 
+
+TERMINAL 3: roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
