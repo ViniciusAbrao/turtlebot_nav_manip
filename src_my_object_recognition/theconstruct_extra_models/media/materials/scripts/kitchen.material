@@ -1,0 +1,105 @@
+material Kitchen/WoodFloor
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+			ambient 0.5 0.5 0.5 1.000000
+
+      texture_unit
+      {
+        texture hardwood_floor.png
+        scale .1 .1
+      }
+    }
+  }
+}
+
+material Kitchen/Grass
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+			ambient 0.5 0.5 0.5 1.000000
+
+      texture_unit
+      {
+        texture grass.png
+        scale .04 .04
+      }
+    }
+  }
+}
+
+material Kitchen/Wall
+{
+  receive_shadows on
+  technique
+  {
+    pass
+    {
+			ambient 1.0 1.0 1.0 1.000000
+
+      texture_unit
+      {
+        texture beigeWall.png
+      }
+    }
+  }
+}
+
+material Kitchen/CounterTop
+{
+  receive_shadows on
+  technique
+  {
+    pass
+    {
+			ambient 1.0 1.0 1.0 1.000000
+
+      texture_unit
+      {
+        texture granite2.png
+        //rotate 90
+        scale 1 .2
+      }
+    }
+  }
+}
+
+material Kitchen/CounterTop_H
+{
+  receive_shadows on
+  technique
+  {
+    pass
+    {
+			ambient 1.0 1.0 1.0 1.000000
+
+      texture_unit
+      {
+        texture granite.png
+        scale .2 1
+      }
+    }
+  }
+}
+
+material Kitchen/Cabinet
+{
+  receive_shadows on
+  technique
+  {
+    pass
+    {
+			ambient .604 .423 .0313 
+			diffuse .604 .423 .0313 1.000000
+			specular 0.1 0.1 0.1 1.0 128
+    }
+  }
+}

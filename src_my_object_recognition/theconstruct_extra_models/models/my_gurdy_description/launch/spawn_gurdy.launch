@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <arg name="x" default="0.0" />
+    <arg name="y" default="0.0" />
+    <arg name="z" default="0.2" />
+
+    <arg name="urdf_robot_file" default="$(find my_gurdy_description)/urdf/gurdy.urdf" />
+    <arg name="robot_name" default="gurdy" />
+
+    <!-- This version was created because of some errors seen in the V1 that crashed Gazebo or went too slow in spawn -->
+    <!-- Load the URDF into the ROS Parameter Server -->
+    <param name="robot_description" command="cat $(arg urdf_robot_file)" />
+
+    <!-- Run a python script to send a service call to gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+    args="-urdf -x $(arg x) -y $(arg y) -z $(arg z)  -model $(arg robot_name) -param robot_description"/>
+
+    <include file="$(find my_gurdy_description)/launch/gurdy_control.launch"/>
+
+</launch>

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!--Define constants-->
+    <xacro:property name="M_PI" value="3.1415926535897931" />
+    <xacro:property name="VELOCITY_LIMIT_SCALE" value="0.6" />
+
+    <!-- Gear Ratio Corrections: Divide transmission reductions by these factors (Nominally 1)-->
+    <xacro:property name="cal_r_shoulder_pan_gearing"   value="1.0" />
+    <xacro:property name="cal_r_shoulder_lift_gearing"  value="1.0" />
+    <xacro:property name="cal_r_upper_arm_roll_gearing" value="1.0" />
+
+    <!-- ********** Right Arm ********** -->
+    <!-- Flag offsets: Add to the optical flag locations (Nominally 0) -->
+    <xacro:property name="cal_r_shoulder_pan_flag"   value="0.0" />
+    <xacro:property name="cal_r_shoulder_lift_flag"  value="0.0" />
+    <xacro:property name="cal_r_upper_arm_roll_flag" value="0.0" />
+    <xacro:property name="cal_r_elbow_flex_flag"     value="0.0" />
+    <xacro:property name="cal_r_forearm_roll_flag"   value="0.0" />
+    <xacro:property name="cal_r_wrist_flex_flag"     value="0.0" />
+    <xacro:property name="cal_r_wrist_roll_flag"     value="0.0" />
+
+    <!-- ********** Head ********** -->
+    <!-- Head Location: Add to the transform from torso to head_pan_link (Nominally 0) -->
+    <xacro:property name="cal_head_x" value="0.0" />
+    <xacro:property name="cal_head_y" value="0.0" />
+    <xacro:property name="cal_head_z" value="0.0" />
+    <xacro:property name="cal_head_roll" value="0.0" />
+    <xacro:property name="cal_head_pitch" value="0.0" />
+    <xacro:property name="cal_head_yaw" value="0.0" />
+
+    <!-- Flag Offsets -->
+    <xacro:property name="cal_head_pan_flag"  value="0.0" />
+    <xacro:property name="cal_head_tilt_flag" value="0.0" />
+
+    <!-- Casters -->
+    <xacro:property name="cal_caster_fl" value="0.0" />
+    <xacro:property name="cal_caster_fr" value="0.0" />
+    <xacro:property name="cal_caster_bl" value="0.0" />
+    <xacro:property name="cal_caster_br" value="0.0" />
+
+
+    <!-- Throwing in left arm constants to appease the xacro parser -->
+    <xacro:property name="cal_l_shoulder_pan_flag" value="0.000000" />
+    <xacro:property name="cal_l_wrist_roll_flag" value="0.0" />
+
+
+    <xacro:property name="caster_offset_x" value="0.2246" />
+    <xacro:property name="caster_offset_y" value="0.2246" />
+    <xacro:property name="caster_offset_z" value="0.0282" />
+
+    <xacro:property name="caster_wheel_offset_y" value="0.049" />
+    <xacro:property name="wheel_length" value="0.034" />
+    <xacro:property name="wheel_radius" value="0.074792" />   <!-- This is the 'effective' wheel radius. Wheel radius for uncompressed wheel is 0.079.  mp 20080801 -->
+
+    <xacro:property name="base_cg_x" value="-0.061" />
+    <xacro:property name="base_cg_y" value="0.0" />
+    <xacro:property name="base_cg_z" value="${0.5*0.293}" />
+    <xacro:property name="base_mass" value="200.0" />
+
+    <!-- simplified box collision geometry for base -->
+    <xacro:property name="base_size_x" value="0.65" />
+    <xacro:property name="base_size_y" value="0.65" />
+    <xacro:property name="base_size_z" value="0.23" />
+    <xacro:property name="base_collision_size_z" value="0.04" />
+    <xacro:property name="shoulder_lift_length" value="0.10" />  <!--TODO Define and give source-->
+    <xacro:property name="shoulder_lift_radius" value="0.12" />  <!--TODO Define and give source-->
+
+    <xacro:property name="uar_xyz1" value= "0.21398" />
+    <xacro:property name="uar_xyz2" value="-0.01621" />
+    <xacro:property name="uar_xyz3" value="-0.00020" />
+    <xacro:property name="uar_ixx"  value= "0.01537748957" />
+    <xacro:property name="uar_ixy"  value= "0.00375711247" />
+    <xacro:property name="uar_ixz"  value="-0.00070852914" />
+    <xacro:property name="uar_iyy"  value= "0.07473670440" />
+    <xacro:property name="uar_iyz"  value="-0.00017936450" />
+    <xacro:property name="uar_izz"  value= "0.07608763307" />
+
+    <xacro:property name="ual_xyz1" value= "0.21405" />
+    <xacro:property name="ual_xyz2" value= "0.01658" />
+    <xacro:property name="ual_xyz3" value="-0.00057" />
+    <xacro:property name="ual_ixx"  value= "0.01530603856" />
+    <xacro:property name="ual_ixy"  value="-0.00339324862" />
+    <xacro:property name="ual_ixz"  value= "0.00060765455" />
+    <xacro:property name="ual_iyy"  value= "0.07473694455" />
+    <xacro:property name="ual_iyz"  value="-0.00019953729" />
+    <xacro:property name="ual_izz"  value= "0.07601594191" />
+
+    <xacro:property name="gripper_mass"  value= "0.1" />
+    <xacro:property name="finger_mass" value="0.1" />
+    <xacro:property name="gripper_size"  value= "0.05" />
+
+    <!-- simplified box collision geometry for hokuyo laser -->
+    <xacro:property name="base_laser_x" value="0.275" />
+    <xacro:property name="base_laser_y" value="0.0" />
+    <xacro:property name="base_laser_z" value="0.252" />
+    <xacro:property name="base_laser_size_x" value="0.06" />
+    <xacro:property name="base_laser_size_y" value="0.06" />
+    <xacro:property name="base_laser_size_z" value="0.03" />
+    <xacro:property name="base_laser_collision_offset_z" value="0.023" />
+
+</robot>

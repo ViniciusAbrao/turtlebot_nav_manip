@@ -1,0 +1,428 @@
+<robot name="gurdy">
+
+    <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+    </material>
+    <material name="red">
+        <color rgba="0.8 0 0 1"/>
+    </material>
+    <material name="green">
+        <color rgba="0 0.8 0 1"/>
+    </material>
+	<!-- * * * Link Definitions * * * -->
+
+    <link name="base_link">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+		<visual>
+		    <origin xyz="0 0 0.01" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.01 0.01 0.01"/>
+			</geometry>
+		</visual>
+	</link>
+
+    <link name="head_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.02" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="7.58333333333e-07" ixy="0.0" ixz="0.0" iyy="7.58333333333e-07" iyz="0.0" izz="1.25e-06"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.02" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.05" length="0.04"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_gurdy_description/models/gurdy/meshes/gurdy_head_v2.dae"/>
+            </geometry>
+        </visual>
+	</link>
+
+    <gazebo reference="head_link">
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
+    </gazebo>
+
+    <joint name="fixed" type="fixed">
+        <parent link="base_link"/>
+        <child link="head_link"/>
+    </joint>
+
+    <link name="upperleg_M1_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="3.015625e-05" ixy="0.0" ixz="0.0" iyy="3.015625e-05" iyz="0.0" izz="3.125e-07"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.0025"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_gurdy_description/models/gurdy/meshes/gurdy_higherleg_v2.dae"/>
+            </geometry>
+        </visual>
+	</link>
+
+
+    <joint name="head_upperlegM1_joint" type="revolute">
+    	<parent link="head_link"/>
+    	<child link="upperleg_M1_link"/>
+        <origin xyz="-0.02165 -0.0125 -0.008" rpy="3.14159 0 0.523599"/>
+        <limit lower="-1.55" upper="0.0" effort="1.0" velocity="0.005"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/gurdy</robotNamespace>
+        </plugin>
+    </gazebo>
+
+    <transmission name="tran1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="head_upperlegM1_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor1">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <link name="upperleg_M2_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="3.015625e-05" ixy="0.0" ixz="0.0" iyy="3.015625e-05" iyz="0.0" izz="3.125e-07"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.0025"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_gurdy_description/models/gurdy/meshes/gurdy_higherleg_v2.dae"/>
+            </geometry>
+        </visual>
+	</link>
+
+
+    <joint name="head_upperlegM2_joint" type="revolute">
+    	<parent link="head_link"/>
+    	<child link="upperleg_M2_link"/>
+        <origin xyz="0.02165 -0.0125 -0.008" rpy="3.14159 0 2.61799"/>
+        <limit lower="-1.55" upper="0.0" effort="1.0" velocity="0.005"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+    <transmission name="tran2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="head_upperlegM2_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor2">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+
+    <link name="upperleg_M3_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="3.015625e-05" ixy="0.0" ixz="0.0" iyy="3.015625e-05" iyz="0.0" izz="3.125e-07"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.0025"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_gurdy_description/models/gurdy/meshes/gurdy_higherleg_v2.dae"/>
+            </geometry>
+        </visual>
+	</link>
+
+
+    <joint name="head_upperlegM3_joint" type="revolute">
+    	<parent link="head_link"/>
+    	<child link="upperleg_M3_link"/>
+        <origin xyz="0 0.025 -0.008" rpy="3.14159 0 -1.5708"/>
+        <limit lower="-1.55" upper="0.0" effort="1.0" velocity="0.005"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+    <transmission name="tran3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="head_upperlegM3_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor3">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+
+    <link name="lowerleg_M1_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="3.005625e-05" ixy="0.0" ixz="0.0" iyy="3.005625e-05" iyz="0.0" izz="1.125e-07"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.0015"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_gurdy_description/models/gurdy/meshes/gurdy_lowerleg_v2.dae"/>
+            </geometry>
+        </visual>
+	</link>
+
+
+    <joint name="upperlegM1_lowerlegM1_joint" type="continuous">
+    	<parent link="upperleg_M1_link"/>
+    	<child link="lowerleg_M1_link"/>
+        <origin xyz="0 0.0095 0.06" rpy="0 0 3.14159"/>
+        <limit lower="-2.9" upper="1.5708" effort="1.0" velocity="0.005"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+    <transmission name="tran4">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="upperlegM1_lowerlegM1_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor4">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <link name="lowerleg_M2_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="3.005625e-05" ixy="0.0" ixz="0.0" iyy="3.005625e-05" iyz="0.0" izz="1.125e-07"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.0015"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_gurdy_description/models/gurdy/meshes/gurdy_lowerleg_v2.dae"/>
+            </geometry>
+        </visual>
+	</link>
+
+
+    <joint name="upperlegM2_lowerlegM2_joint" type="revolute">
+    	<parent link="upperleg_M2_link"/>
+    	<child link="lowerleg_M2_link"/>
+        <origin xyz="0 0.0095 0.06" rpy="0 0 3.14159"/>
+        <limit lower="-2.9" upper="1.5708" effort="1.0" velocity="0.005"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+    <transmission name="tran5">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="upperlegM2_lowerlegM2_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor5">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <link name="lowerleg_M3_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="3.005625e-05" ixy="0.0" ixz="0.0" iyy="3.005625e-05" iyz="0.0" izz="1.125e-07"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.0015"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_gurdy_description/models/gurdy/meshes/gurdy_lowerleg_v2.dae"/>
+            </geometry>
+        </visual>
+	</link>
+
+
+    <joint name="upperlegM3_lowerlegM3_joint" type="revolute">
+    	<parent link="upperleg_M3_link"/>
+    	<child link="lowerleg_M3_link"/>
+        <origin xyz="0 0.0095 0.06" rpy="0 0 3.14159"/>
+        <limit lower="-2.9" upper="1.5708" effort="1.0" velocity="0.005"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+    <transmission name="tran6">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="upperlegM3_lowerlegM3_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor6">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+
+    <link name="footM1_link">
+ 	    <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="1.28e-06" ixy="0.0" ixz="0.0" iyy="1.28e-06" iyz="0.0" izz="1.28e-06"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.008"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.008"/>
+            </geometry>
+        </visual>
+	</link>
+
+    <gazebo reference="footM1_link">
+        <kp>1000.0</kp>
+        <kd>1000.0</kd>
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
+        <material>Gazebo/Red</material>
+    </gazebo>
+
+
+    <joint name="basefoot_peg_M1_basefoot_peg_M1_joint_joint" type="fixed">
+        <parent link="lowerleg_M1_link"/>
+        <child link="footM1_link"/>
+        <origin xyz="0 0 0.06" rpy="0 0 0"/>
+    </joint>
+
+    <link name="footM2_link">
+ 	    <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="1.28e-06" ixy="0.0" ixz="0.0" iyy="1.28e-06" iyz="0.0" izz="1.28e-06"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.008"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.008"/>
+            </geometry>
+        </visual>
+	</link>
+
+    <gazebo reference="footM2_link">
+        <kp>1000.0</kp>
+        <kd>1000.0</kd>
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
+        <material>Gazebo/Green</material>
+    </gazebo>
+
+    <joint name="basefoot_peg_M2_basefoot_peg_M2_joint_joint" type="fixed">
+        <parent link="lowerleg_M2_link"/>
+        <child link="footM2_link"/>
+        <origin xyz="0 0 0.06" rpy="0 0 0"/>
+    </joint>
+
+    <link name="footM3_link">
+ 	    <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="1.28e-06" ixy="0.0" ixz="0.0" iyy="1.28e-06" iyz="0.0" izz="1.28e-06"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius="0.008"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.008"/>
+            </geometry>
+        </visual>
+	</link>
+
+    <gazebo reference="footM3_link">
+        <kp>1000.0</kp>
+        <kd>1000.0</kd>
+        <mu1>10.0</mu1>
+        <mu2>10.0</mu2>
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <joint name="basefoot_peg_M3_basefoot_peg_M3_joint_joint" type="fixed">
+        <parent link="lowerleg_M3_link"/>
+        <child link="footM3_link"/>
+        <origin xyz="0 0 0.06" rpy="0 0 0"/>
+    </joint>
+
+
+    <gazebo>
+        <plugin name="gazebo_ros_imu_controller" filename="libgazebo_ros_imu.so">
+          <robotNamespace>/gurdy</robotNamespace>
+          <topicName>imu/data</topicName>
+          <serviceName>imu/service</serviceName>
+          <bodyName>base_link</bodyName>
+          <gaussianNoise>0</gaussianNoise>
+          <rpyOffsets>0 0 0</rpyOffsets>
+          <updateRate>10.0</updateRate>
+          <alwaysOn>true</alwaysOn>
+          <gaussianNoise>0</gaussianNoise>
+        </plugin>
+    </gazebo>
+
+
+</robot>

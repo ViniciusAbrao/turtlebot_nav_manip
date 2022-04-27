@@ -1,0 +1,17 @@
+<launch>
+
+<arg name="output" default="screen"/>
+
+<node name="camera" pkg="usb_cam" type="usb_cam_node" output="$(arg output)" clear_params="true" respawn="false" required="false" launch-prefix="" >
+        <param name="video_device" value="/dev/video0" />
+        <param name="image_width" value="640" />
+        <param name="image_height" value="480" />
+        <param name="framerate" value="30" />
+        <param name="camera_frame_id" value="cam_optical_link" />
+        <param name="pixel_format" value="yuyv" />
+        
+        <param name="camera_info_url" value="file://$(find darknet_ros)/cam_config/random_camera.yaml" />
+        <param name="camera_name" value="camera" />
+    </node>
+
+</launch>

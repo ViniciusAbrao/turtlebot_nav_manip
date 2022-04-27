@@ -1,0 +1,217 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="camera" params="">
+    
+        <!-- RGBD camera -->
+        <link name="camera_link">
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.036 0.18 0.04"/>
+            </geometry>
+        </collision>
+        <!--
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+            <box size="0.036 0.18 0.04"/>
+            </geometry>
+        </visual>
+        -->
+        <inertial>
+            <mass value="0.2" />
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <inertia ixx="5.8083e-4" ixy="0" ixz="0" iyy="3.0833e-5" iyz="0" izz="5.9083e-4" />
+        </inertial>
+        </link>
+
+        <link name="camera_rgb_frame" />
+
+        <joint name="camera_link_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0.065 0 0.12" />
+        <parent link="head_tilt_link" />
+        <child link="camera_link" />
+        </joint>
+
+        <joint name="camera_rgb_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0.022 0" />
+        <parent link="camera_link" />
+        <child link="camera_rgb_frame" />
+        </joint>
+
+        <link name="camera_rgb_optical_frame" />
+
+        <joint name="camera_rgb_optical_joint" type="fixed">
+        <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0" />
+        <parent link="camera_rgb_frame" />
+        <child link="camera_rgb_optical_frame" />
+        </joint>
+
+        <link name="camera_depth_frame" />
+
+        <joint name="camera_depth_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0.049 0" />
+        <parent link="camera_link" />
+        <child link="camera_depth_frame" />
+        </joint>
+
+        <link name="camera_depth_optical_frame" />
+
+        <joint name="camera_depth_optical_joint" type="fixed">
+        <origin rpy="-1.57079632679 0 -1.57079632679" xyz="0 0 0" />
+        <parent link="camera_depth_frame" />
+        <child link="camera_depth_optical_frame" />
+        </joint>
+
+
+        <!--RGBD camera -->
+        <gazebo reference="camera_rgb_frame">
+        <sensor type="depth" name="camera">
+            <always_on>true</always_on>
+            <visualize>false</visualize>
+            <update_rate>15.0</update_rate>
+            <camera name="front">
+            <horizontal_fov>1.5</horizontal_fov><!--default=1.047197-->
+            <image>
+                <!-- openni_kinect plugin works only with BGR8 -->
+                <format>B8G8R8</format>
+                <!-- <width>416</width>
+                <height>416</height> -->
+                <width>640</width>
+                <height>480</height>
+            </image>
+            <clip>
+                <near>0.01</near>
+                <far>9</far>
+            </clip>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_openni_kinect.so">
+            <baseline>0.1</baseline>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>15.0</updateRate>
+            <cameraName>camera</cameraName>
+            <imageTopicName>/camera/rgb/image_raw</imageTopicName>
+            <cameraInfoTopicName>/camera/rgb/camera_info</cameraInfoTopicName>
+            <depthImageTopicName>/camera/depth_registered/image_raw</depthImageTopicName>
+            <depthImageCameraInfoTopicName>/camera/depth_registered/camera_info</depthImageCameraInfoTopicName>
+            <pointCloudTopicName>/camera/depth_registered/points</pointCloudTopicName>
+            <frameName>camera_rgb_optical_frame</frameName>
+            <pointCloudCutoff>0.5</pointCloudCutoff>
+            <pointCloudCutoffMax>4.5</pointCloudCutoffMax>
+            <CxPrime>0</CxPrime>
+            <Cx>0</Cx>
+            <Cy>0</Cy>
+            <focalLength>0</focalLength>
+            <hackBaseline>0</hackBaseline>
+            </plugin>
+        </sensor>
+        </gazebo> 
+
+    </xacro:macro>
+
+
+    <!-- Tilting Laser-->
+    <xacro:macro name="pr2_tilting_laser_v0" params="name parent laser_calib_ref *origin">
+
+        <joint name="${name}_mount_joint" type="revolute">
+        <axis xyz="0 1 0" />
+        <limit lower="-0.7854" upper="1.48353" effort="0.65" velocity="10.0" /> <!-- alpha tested velocity and effort limits -->
+        <safety_controller k_position="100" k_velocity="0.05" soft_lower_limit="${-0.7854+0.05}" soft_upper_limit="${1.48353-0.05}" />
+        <calibration falling="${laser_calib_ref}" />
+        <dynamics damping="0.008" />
+        <xacro:insert_block name="origin" />
+        <parent link="${parent}"/>
+        <child link="${name}_mount_link"/>
+        </joint>
+        <link name="${name}_mount_link">
+
+        <inertial>
+            <mass value="0.591" />
+            <origin xyz="-0.001136 0.00167 -0.00713" rpy="0 0 0" />
+            <inertia ixx="0.001195273" ixy="0.000023087" ixz="0.000037467" 
+                    iyy="0.001083956" iyz="0.000034906" 
+                    izz="0.000795014" />
+        </inertial>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh filename="package://pr2_tc_description/meshes/tilting_laser_v0/tilting_hokuyo_png.dae" />
+            </geometry>
+            
+            <material name="Red" />
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+            <mesh filename="package://pr2_tc_description/meshes/tilting_laser_v0/tilting_hokuyo_L.stl" />
+            </geometry>
+        </collision>
+        </link>
+
+        <xacro:hokuyo_lx30_laser_v0 name="${name}" parent="${name}_mount" ros_topic="tilt_scan" update_rate="40" min_angle="-1.3962634" max_angle="1.3962634" >
+        <origin xyz="0 0 0.03" rpy="0 0 0" />
+        </xacro:hokuyo_lx30_laser_v0>
+
+        <!-- extensions -->
+        <xacro:pr2_tilting_laser_gazebo_v0 name="${name}"/>
+        <xacro:pr2_tilting_laser_transmission_v0 name="${name}"/>
+    </xacro:macro>
+
+    <!-- Hokuyo-->
+    <xacro:macro name="hokuyo_lx30_laser_gazebo_v0" params="name ros_topic update_rate min_angle max_angle">
+        <gazebo reference="${name}_link">
+        <sensor type="ray" name="${name}">
+            <always_on>true</always_on>
+            <update_rate>${update_rate}</update_rate>
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>false</visualize>
+            <ray>
+            <scan>
+                <horizontal>
+                <samples>640</samples>
+                <resolution>1</resolution>
+                <min_angle>${min_angle}</min_angle>
+                <max_angle>${max_angle}</max_angle>
+                </horizontal>
+            </scan>
+            <range>
+                <min>0.08</min>
+                <max>10.0</max>
+                <resolution>0.01</resolution>
+            </range>
+            </ray>
+            <plugin name="gazebo_ros_${name}_controller" filename="libgazebo_ros_laser.so">
+            <gaussianNoise>0.005</gaussianNoise>
+            <alwaysOn>true</alwaysOn>
+            <updateRate>${update_rate}</updateRate>
+            <topicName>${ros_topic}</topicName>
+            <frameName>${name}_link</frameName>
+            <hokuyoMinIntensity>101</hokuyoMinIntensity>
+            </plugin>
+        </sensor>
+        </gazebo>
+    </xacro:macro>
+    <xacro:macro name="hokuyo_lx30_laser_v0" params="name parent *origin ros_topic update_rate min_angle max_angle">
+        <joint name="${name}_joint" type="fixed">
+        <axis xyz="0 1 0" />
+        <xacro:insert_block name="origin" />
+        <parent link="${parent}_link"/>
+        <child link="${name}_link"/>
+        </joint>
+        <link name="${name}_link" type="laser">
+        <inertial>
+            <mass value="0.001" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001" />
+        </inertial>
+        </link>
+        <!-- gazebo extensions -->
+        <xacro:hokuyo_lx30_laser_gazebo_v0 name="${name}" ros_topic="${ros_topic}" update_rate="${update_rate}" min_angle="${min_angle}" max_angle="${max_angle}" />
+    </xacro:macro>
+
+
+
+</robot>

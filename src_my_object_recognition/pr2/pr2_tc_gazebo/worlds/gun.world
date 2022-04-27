@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version="1.5">
+  <world name="default">
+
+
+    <physics type="ode">
+      <gravity>0 0 -9.81</gravity>
+      <ode>
+        <solver>
+          <type>quick</type>
+          <iters>200</iters>
+          <sor>1.0</sor>
+        </solver>
+        <constraints>
+          <cfm>0.0</cfm>
+          <erp>0.2</erp>
+          <contact_max_correcting_vel>100.0</contact_max_correcting_vel>
+          <contact_surface_layer>0.0</contact_surface_layer>
+        </constraints>
+      </ode>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+    </physics>
+
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://butter_table</uri>
+      <name>butter_table</name>
+      <pose>0 0 0 0 0 0</pose>
+    </include>
+
+    
+    <include>
+      <uri>model://monster_can</uri>
+      <name>monster_can</name>
+      <pose>-1.017686 -0.625454 1.0 0 0 -1.584273</pose>
+    </include>
+
+    <include>
+      <uri>model://banana</uri>
+      <name>banana</name>
+      <pose>-0.919230 0.598989 1.156925 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://donut_frost_1</uri>
+      <name>donut_frost_1</name>
+      <pose>-0.796252 0.263746 1.5 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://gun</uri>
+      <name>gun0</name>
+      <pose>-0.796252 -0.230887 1.5 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://portal_gun</uri>
+      <name>portal_gun0</name>
+      <pose>-0.929664 1.189074 1.5 0 0 0 0</pose>
+    </include>
+    
+    
+    <!-- Lights-->
+    <light name='user_point_light_0' type='point'>
+      <pose frame=''>0.0 0.0 4.0 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>10</range>
+        <constant>0.01</constant>
+        <linear>0.1</linear>
+        <quadratic>0.02</quadratic>
+      </attenuation>
+      <cast_shadows>0</cast_shadows>
+      <direction>0 0 -1</direction>
+    </light>
+
+    <light name='user_point_light_1' type='point'>
+      <pose frame=''>-1.193050 -0.668339 1.079924 0 0 0</pose>
+      <diffuse>1 1 1 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <attenuation>
+        <range>20.0</range>
+        <constant>0.5</constant>
+        <linear>0.01</linear>
+        <quadratic>0.0</quadratic>
+      </attenuation>
+      <cast_shadows>0</cast_shadows>
+      <direction>0 0 -1</direction>
+    </light>
+
+
+
+  </world>
+</sdf>

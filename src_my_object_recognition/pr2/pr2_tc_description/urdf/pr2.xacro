@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<robot name="pr2" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- Robot constants and properties -->
+	<xacro:include filename="$(find pr2_tc_description)/urdf/properties.xacro" />
+	<!-- Tansmissions for joints -->
+	<xacro:include filename="$(find pr2_tc_description)/urdf/transmissions.xacro" />
+	<!-- Materials elements-->
+	<xacro:include filename="$(find pr2_tc_description)/urdf/materials.xacro" />
+	<!-- Sensor elements-->
+	<xacro:include filename="$(find pr2_tc_description)/urdf/sensors.xacro" />
+	<!-- Gazebo elements-->
+	<xacro:include filename="$(find pr2_tc_description)/urdf/pr2.gazebo.xacro" />
+    <!-- Base -->
+	<xacro:include filename="$(find pr2_tc_description)/urdf/base_new.xacro" />
+	<xacro:include filename="$(find pr2_tc_description)/urdf/torso.xacro" />
+	<xacro:include filename="$(find pr2_tc_description)/urdf/arms.xacro" />
+	<xacro:include filename="$(find pr2_tc_description)/urdf/gripper.xacro" />
+	<xacro:include filename="$(find pr2_tc_description)/urdf/head.xacro" />
+	
+	
+    <xacro:pr2_base name="base"/>
+	<xacro:torso/>
+
+	<xacro:pr2_shoulder side="right" reflect="-1" parent="torso_lift_link">
+		<origin xyz="0.0 -0.188 0.0" rpy="0 0 0" />
+	</xacro:pr2_shoulder>
+	<xacro:pr2_shoulder side="left" reflect="1" parent="torso_lift_link">
+		<origin xyz="0.0 0.188 0.0" rpy="0 0 0" />
+	</xacro:pr2_shoulder>
+
+	<xacro:pr2_upper_arm side="right" reflect="-1" parent="right_upper_arm_roll_link"/>
+	<xacro:pr2_forearm side="right" reflect="-1" parent="right_forearm_roll_link">
+		<origin xyz="0 0 0" rpy="0 0 0" />
+	</xacro:pr2_forearm>
+
+	<xacro:pr2_upper_arm side="left" reflect="1" parent="left_upper_arm_roll_link"/>
+	<xacro:pr2_forearm side="left" reflect="1" parent="left_forearm_roll_link">
+		<origin xyz="0 0 0" rpy="0 0 0" />
+	</xacro:pr2_forearm>
+
+	<xacro:pr2_gripper side="right"/>
+	<xacro:pr2_gripper side="left"/>
+	<xacro:pr2_gripper_gazebo side="right"/>
+	<xacro:pr2_gripper_gazebo side="left"/>
+
+	<xacro:pr2_head_v0 name="head" parent="torso_lift_link">
+        <origin xyz="-0.01707 0.0 0.38145"
+            rpy="0.0 0.0 0.0" />
+    </xacro:pr2_head_v0>
+
+	<xacro:pr2_tilting_laser_v0 name="laser_tilt" parent="torso_lift_link" laser_calib_ref="0.0">
+		<origin xyz="0.09893 0 0.227" rpy="0.0 0.0 0.0" />
+    </xacro:pr2_tilting_laser_v0>
+
+</robot>

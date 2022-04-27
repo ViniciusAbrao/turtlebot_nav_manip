@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: pr2_tc_description
+    relative_path: urdf/pr2.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/pr2.srdf
+  CONFIG:
+    author_name: RDneelOlivaw
+    author_email: duckfrost@theconstructsim.com
+    generated_timestamp: 1614238288

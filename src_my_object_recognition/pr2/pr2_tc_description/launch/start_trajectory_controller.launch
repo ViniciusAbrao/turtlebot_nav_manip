@@ -1,0 +1,3 @@
+<launch>
+  <node type="rqt_joint_trajectory_controller" name="rqt_joint_trajectory_controller" pkg="rqt_joint_trajectory_controller" args="" />
+</launch>

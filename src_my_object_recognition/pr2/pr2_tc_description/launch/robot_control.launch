@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!--Load the joint controllers to param server-->
+  <rosparam file="$(find pr2_tc_description)/config/controllers.yaml" command="load"/>
+
+  <node name="robot_state_publisher_pr2" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+        <param name="publish_frequency" type="double" value="5.0" />        
+        <remap from="/joint_states" to="/pr2/joint_states" />
+  </node>
+
+
+  <!--Load controllers-->
+  <node name="spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" args="--namespace=/pr2
+    joint_state_controller
+    right_arm_controller
+    left_arm_controller
+    torso_lift_joint_controller
+    left_gripper_controller
+    right_gripper_controller
+    head_joint_controller
+    laser_tilt_mount_joint_controller
+    fl_caster_rotation_joint_controller
+    fr_caster_rotation_joint_controller
+    br_caster_rotation_joint_controller
+    bl_caster_rotation_joint_controller
+    fr_caster_l_wheel_joint_controller
+    fr_caster_r_wheel_joint_controller
+    fl_caster_l_wheel_joint_controller
+    fl_caster_r_wheel_joint_controller
+    br_caster_l_wheel_joint_controller
+    br_caster_r_wheel_joint_controller
+    bl_caster_l_wheel_joint_controller
+    bl_caster_r_wheel_joint_controller
+    --shutdown-timeout 3
+    "/>
+</launch>

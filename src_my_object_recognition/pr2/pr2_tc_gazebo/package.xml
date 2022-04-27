@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>pr2_tc_gazebo</name>
+  <version>0.0.0</version>
+  <description>The pr2_tc_gazebo package</description>
+  <maintainer email="tgrip@todo.todo">tgrip</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_export_depend>gazebo_ros</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>rospy</exec_depend>
+
+
+  <export>
+    <gazebo_ros gazebo_model_path="${prefix}/models"/>
+  </export>
+</package>

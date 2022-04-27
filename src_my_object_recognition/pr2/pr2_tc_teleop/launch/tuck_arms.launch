@@ -1,0 +1,5 @@
+
+<launch>        
+    <node pkg="pr2_tc_teleop" type="simple_arms_move.py" name="simple_arms_move_node" output="screen" args="-l t -r t -q">
+    </node>
+</launch>

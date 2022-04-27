@@ -1,0 +1,93 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!--Gripper MACRO-->
+    <xacro:macro name="pr2_gripper" params="side">
+        <link name="${side}_gripper_link">
+            <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${gripper_mass}"/>
+            <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.0002" iyz="0" izz="0.0002"/>
+            </inertial>
+            <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://pr2_tc_description/meshes/gripper/gripper_base.dae"/>
+            </geometry>
+            <material name="Grey2" />
+            </visual>
+            <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://pr2_tc_description/meshes/gripper/gripper_base.dae"/>
+            </geometry>
+            </collision>
+        </link>
+        <link name="${side}_right_gripper_finger_link">
+            <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${finger_mass}"/>
+            <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.0002" iyz="0" izz="0.0002"/>
+            </inertial>
+            <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://pr2_tc_description/meshes/gripper/finger_right.dae"/>
+            </geometry>
+            <material name="Grey2" />
+            </visual>
+            <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://pr2_tc_description/meshes/gripper/finger_right_collision.dae"/>
+            </geometry>
+            </collision>
+        </link>
+        <link name="${side}_left_gripper_finger_link">
+            <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="${finger_mass}"/>
+            <inertia ixx="0.002" ixy="0" ixz="0" iyy="0.0002" iyz="0" izz="0.0002"/>
+            </inertial>
+            <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://pr2_tc_description/meshes/gripper/finger_left.dae"/>
+            </geometry>
+            <material name="Grey2" />
+            </visual>
+            <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://pr2_tc_description/meshes/gripper/finger_left_collision.dae"/>
+            </geometry>
+            </collision>
+        </link>
+
+        <joint name="${side}_right_gripper_finger_joint" type="prismatic">
+            <origin rpy="0 0 0" xyz="0.075 -0.06 0" />
+            <parent link="${side}_gripper_link" />
+            <child link="${side}_right_gripper_finger_link" />
+            <axis xyz="0 1 0" />
+            <limit effort="1000" lower="0.0" upper="0.05" velocity="0.05" />
+            <dynamics damping="0.7" />
+        </joint>
+        <joint name="${side}_left_gripper_finger_joint" type="prismatic">
+            <origin rpy="0 0 0" xyz="0.075 0.06 0" />
+            <parent link="${side}_gripper_link" />
+            <child link="${side}_left_gripper_finger_link" />
+            <axis xyz="0 -1 0" />
+            <limit effort="1000" lower="0.0" upper="0.05" velocity="0.05" />
+            <dynamics damping="0.7" />
+        </joint>
+        <joint name="${side}_gripper_joint" type="fixed">
+            <parent link="${side}_wrist_roll_link"/>
+            <child link="${side}_gripper_link"/>
+            <origin xyz="0.075 0 0" rpy="0 0 0"/><!--0.087-->
+            <axis xyz="0 1 0" />
+        </joint>
+    </xacro:macro>
+
+
+
+</robot>

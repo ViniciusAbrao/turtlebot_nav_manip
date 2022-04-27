@@ -1,0 +1,26 @@
+<launch>
+
+    <arg name="launch_rviz" default="true"/>
+
+  <include file="$(find pr2_tc_movit)/launch/planning_context.launch" >
+    <arg name="load_robot_description" value="true" />
+  </include>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="false"/>
+    <rosparam param="/source_list">[/pr2/joint_states]</rosparam>
+  </node>
+
+  <include file="$(find pr2_tc_movit)/launch/move_group.launch">
+    <arg name="publish_monitored_planning_scene" value="true" />
+  </include>
+
+    <group if="$(arg launch_rviz)">
+        <include file="$(find pr2_tc_movit)/launch/moveit_rviz.launch">
+            <arg name="rviz_config" value="$(find pr2_tc_movit)/launch/moveit.rviz"/>
+        </include>
+    </group>
+
+
+
+</launch>

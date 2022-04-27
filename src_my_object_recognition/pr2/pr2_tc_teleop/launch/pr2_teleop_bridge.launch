@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <node name="pr2_tc_teleop_node" pkg="pr2_tc_teleop" type="pr2_teleop_bridge.py"
+    respawn="false" output="screen">
+  </node>
+
+</launch>

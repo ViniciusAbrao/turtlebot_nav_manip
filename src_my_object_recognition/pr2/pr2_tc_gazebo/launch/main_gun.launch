@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="x" default="-2.5" />
+  <arg name="y" default="0.0" />
+  <arg name="z" default="0.08" />
+  <arg name="roll" default="0"/>
+  <arg name="pitch" default="0"/>
+  <arg name="yaw" default="0.0" />
+
+
+
+  <include file="$(find pr2_tc_gazebo)/launch/world.launch">
+    <arg name="world_name" value="$(find pr2_tc_gazebo)/worlds/gun.world"/>
+  </include>
+  <include file="$(find pr2_tc_description)/launch/robot_spawn.launch">
+    <arg name="x" value="$(arg x)" />
+    <arg name="y" value="$(arg y)" />
+    <arg name="z" value="$(arg z)" />
+    <arg name="roll" value="$(arg roll)"/>
+    <arg name="pitch" value="$(arg pitch)"/>
+    <arg name="yaw" value="$(arg yaw)" />
+  </include>
+  <include file="$(find pr2_tc_description)/launch/start_rviz.launch"/>
+  <include file="$(find pr2_tc_description)/launch/start_trajectory_controller.launch"/>
+  <include file="$(find pr2_tc_movit)/launch/pr2_planning_execution.launch">
+    <arg name="launch_rviz" value="false"/>
+  </include>
+  <include file="$(find pr2_tc_teleop)/launch/pr2_teleop_bridge.launch"/>
+  <include file="$(find pr2_tc_teleop)/launch/tuck_arms.launch"/>
+
+</launch>
