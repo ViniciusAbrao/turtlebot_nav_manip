@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+
+<AttributeLib>
+    <Attribute Name="HistColorPortalGun" Type="HistColor" Histogram="histograms/PortalGun.yaml"/>
+    <Attribute Name="PotalGunSize" Type="Size" MinAreaPc="0.00" MaxAreaPc="100"/>
+    <Attribute Name="NotFractal" Type="Size" MinAreaPc="0.5" MaxAreaPc="100"/>
+
+    <Attribute Name="HistColorBanana" Type="HistColor" Histogram="histograms/Banana.yaml"/>
+    <Attribute Name="BananaSize" Type="Size" MinAreaPc="0.05" MaxAreaPc="100"/>
+
+
+    <Attribute Name="HSVColorBlackGun" Type="HSVColor" Hmin="0" Hmax="0" Smin="0" Smax="0" Vmin="22" Vmax="61"/>
+    <Attribute Name="BlackGunSizeAttribute" Type="Size" MinAreaPc="0.01" MaxAreaPc="20"/>
+
+
+    <Attribute Name="HSVColorPinkDonut" Type="HSVColor" Hmin="68" Hmax="179" Smin="79" Smax="173" Vmin="142" Vmax="255"/>
+    <Attribute Name="DonutSizeAttribute" Type="Size" MinAreaPc="0.00" MaxAreaPc="100"/>
+    
+    <Attribute Name="HaarGun" Type="HaarCascade" Cascade="gun_haar/classifier/cascade.xml"/>
+    <Attribute Name="MyBlobAttribute" Type="Blob" minThreshold="54" maxThreshold="125" blobColor="0" minArea="1500" minCircularity="0.03" minConvexity="0.64" minInertiaRatio="0.00"/>
+
+    <Attribute Name="HaarBottle" Type="HaarCascade" Cascade="bottle-classifier/classifier/classifier_monster/classifier/cascade.xml"/>
+
+    
+
+
+</AttributeLib>
+
+<SimpleObjectBase>  
+      
+    <SimpleObject Name="PortalGun" ID="1">              
+        <Attribute Type="Detect">HistColorPortalGun</Attribute>  
+        <Attribute Type="Check">PotalGunSize</Attribute>  
+        <Attribute Type="Check">NotFractal</Attribute> 
+    </SimpleObject>
+
+    <SimpleObject Name="Banana" ID="2">              
+        <Attribute Type="Detect">HistColorBanana</Attribute>  
+        <Attribute Type="Check">BananaSize</Attribute>  
+         
+    </SimpleObject>    
+
+    <SimpleObject Name="BlackGun" ID="3">              
+        <Attribute Type="Detect">HSVColorBlackGun</Attribute> 
+        <Attribute Type="Check">NotFractal</Attribute>
+        <Attribute Type="Check">BlackGunSizeAttribute</Attribute>
+    </SimpleObject>
+
+    <SimpleObject Name="PinkDonut" ID="4">              
+        <Attribute Type="Detect">HSVColorPinkDonut</Attribute> 
+        <Attribute Type="Check">NotFractal</Attribute>
+        <Attribute Type="Check">DonutSizeAttribute</Attribute>
+    </SimpleObject>
+
+    <SimpleObject Name="HaarBlackGun" ID="5" Mode="Hard" MergingPolicy="Union">              
+        <Attribute Type="Detect">HaarGun</Attribute>
+        <Attribute Type="Detect">MyBlobAttribute</Attribute> 
+    </SimpleObject>
+
+    <SimpleObject Name="HaarBottle" ID="6" Mode="Hard" MergingPolicy="Union">              
+        <Attribute Type="Detect">HaarBottle</Attribute>
+        <!-- <Attribute Type="Detect">MyBlobAttribute</Attribute>  -->
+    </SimpleObject>    
+
+</SimpleObjectBase>
+
+
+<RelationLib>    
+
+    
+    
+</RelationLib>
+
+
+<ComplexObjectBase>
+    
+    
+</ComplexObjectBase>

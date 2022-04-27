@@ -1,0 +1,9 @@
+# Video & Images #
+######################
+classifier/**/*.mp4
+classifier/**/*.mov
+classifier/**/*.jpg
+classifier/**/*.bmp
+classifier/**/*.png
+
+test_data/**/*.mp4

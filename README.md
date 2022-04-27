@@ -229,3 +229,20 @@ TERMINAL 1 (remember to play gazebo): roslaunch turtlebot3_manipulation_gazebo t
 
 TERMINAL 2 (add display -> rtabmap_ros -> MapCloud, after click in Download map): 
 roslaunch turtlebot3_manipulation_slam nav_rtab.launch localization:=true
+
+____________________________________________________________________________________________________________________________________
+
+MY_OBJECT_RECOGNITION: SIMULATION OF PR2 AND YOLO 
+
+DOWNLOAD THE CONTENT OF THE src_my_object_recognition FOLDER AND PASTE INSIDE YOUR CATKIN_WS/SRC
+
+COMPILE THE PACKAGES WITH catkin_make
+
+TERMINAL 1: roslaunch pr2_tc_gazebo main_elephant_person.launch
+
+TERMINAL 2: roslaunch my_object_recognition_pkg darknet_ros_3d.launch
+
+Extract Position (must be improved):
+- rosrun my_object_recognition_pkg yolo_3d_data_extraction.py
+
+

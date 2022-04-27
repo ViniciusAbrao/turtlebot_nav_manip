@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Classifier Recipes</title>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+		<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/main.css') }}">
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+	</head>
+
+	<body>
+		<div class="container">
+			<!-- header -->
+			<div class="page-header">
+			  <h1>Bottle Classifier <small>Search Results</small></h1>
+			</div>
+			
+			<!-- ingredient names included -->
+			<div class="row">
+				<div class="col-md-12 recipe-title">
+					<h2>> Recipes including {{ ingredient_names["names_str"] }}:</h2>
+				</div>
+				
+				<div class="col-md-6">
+				{% for recipe in recipes %}
+					{% if loop.index0 % 2 == 0 %}
+					
+					<div class="well well-sm hover-shadow">
+						<div class="col-md-12 center-text">
+							<h3><u>{{ recipe[0].name }}</u></h3>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-6">
+								<ul>
+									<li><p>Serves: {{ recipe[0].serves }}</p></li>
+									<li><p>Instructions: {{ recipe[0].instructions }}</p></li>
+									<li><p>Rating: {{ "%.2f" % recipe[0].rating }} / 5</p></li>
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<ul>
+								{% for ingredient in recipe[1] %}
+									<li><p>{{ ingredient["amount"] }} <strong>{{ ingredient["name"] }}</strong></p></li>
+								{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				{% endfor %}
+				</div>
+				<div class="col-md-6">
+				{% for recipe in recipes %}
+					{% if loop.index0 % 2 == 1 %}
+					<div class="well well-sm hover-shadow">
+						<div class="col-md-12 center-text">
+							<h3><u>{{ recipe[0].name }}</u></h3>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-6">
+								<ul>
+									<li><p>Serves: {{ recipe[0].serves }}</p></li>
+									<li><p>Instructions: {{ recipe[0].instructions }}</p></li>
+									<li><p>Rating: {{ "%.2f" % recipe[0].rating }} / 5</p></li>
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<ul>
+								{% for ingredient in recipe[1] %}
+									<li><p>{{ ingredient["amount"] }} <strong>{{ ingredient["name"] }}</strong></p></li>
+								{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				{% endfor %}
+				</div>
+					
+				
+				
+			</div>
+		</div>
+
+		<!-- script includes -->
+		<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}">
+		<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}">
+	</body>
+	
+</html>
+
+

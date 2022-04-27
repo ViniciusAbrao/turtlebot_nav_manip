@@ -1,0 +1,20 @@
+<launch>
+    <arg name="output" default="screen"/>
+    <arg name="objectBasePath" default="$(find my_object_recognition_pkg)/config/object_base_example/Simple_Gun.xml"/>
+    
+    <node name="extended_object_detection" pkg="extended_object_detection" type="extended_object_detection_node" output="screen">
+        
+        <param name="objectBasePath" value="$(arg objectBasePath)"/>
+        <param name="videoProcessUpdateRate" value="5"/>
+        <param name="screenOutput" value="false"/>
+        <param name="publishImage" value="true"/>
+        <param name="publishMarkers" value="true"/>
+        <param name="subscribeDepth" value="false"/>        
+        <param name="maxContourPoints" value="-1"/>        
+        
+        <rosparam param="selectedOnStartSimple">[5,6]</rosparam>
+        <rosparam param="selectedOnStartComplex">[-1]</rosparam>
+        
+    </node>        
+    
+</launch>

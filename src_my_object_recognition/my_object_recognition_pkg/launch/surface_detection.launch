@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="surface_perception_node" pkg="surface_perception" type="demo" output="screen" args="base_link">
+        <remap from="cloud_in" to="/camera/depth_registered/points"/>
+    </node>
+</launch>
