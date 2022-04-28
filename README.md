@@ -217,7 +217,8 @@ TERMINAL 2: roslaunch turtlebot3_manipulation_slam slam_rtab.launch
 TERMINAL 3: roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 crtl+C in the TERMINAL 3 and after that: rtabmap-databaseViewer ~/rtabmap.db
-(an example of a map of the turtlebot3_house.world is found in this repository in my_package/maps)
+An example of a map of the turtlebot3_house.world is found at:
+ https://drive.google.com/file/d/13-oGLLWr7zB9ZfORsgDQ1qQZ7Tay6SSR/view?usp=sharing
 
 2- LOCALIZATION+NAVIGATION:
 
@@ -236,7 +237,7 @@ TERMINAL 1 (remember to play gazebo): roslaunch turtlebot3_manipulation_gazebo t
 TERMINAL 2 (add display -> rtabmap_ros -> MapCloud, after click in Download map): 
 roslaunch turtlebot3_manipulation_slam nav_rtab.launch localization:=true
 
-2- VISUAL ODOMETRY:
+3- VISUAL ODOMETRY:
 
 - IN THE FILE:
 ~/catkin_ws/src/turtlebot3_manipulation_simulations/turtlebot3_manipulation_gazebo/launch/turtlebot3_manipulation_gazebo.launch
