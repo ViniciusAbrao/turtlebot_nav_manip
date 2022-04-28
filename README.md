@@ -118,6 +118,7 @@ THE MAP IS SAVED ON THE ROOT ~/ WITH THE NAME MAP
 
 STOP TERMINAL 3 AND TYPE THE FOLLOWING
 roslaunch turtlebot3_manipulation_navigation navigation.launch map_file:=$HOME/map.yaml
+(an example of a map of the turtlebot3_house.world is found in this repository in my_package/maps)
 
 IN RVIZ GIVE THE INITIAL POSE WITH THE 2D POSE ESTIMATION
 IN THE TERMINAL 2, WITH THE TELEOP YOU CAN IMPROVE THE REAL POSITION WHILE NAVIGATE. 
@@ -145,6 +146,7 @@ THE MAP IS SAVED ON THE ROOT ~/ WITH THE NAME MAP
 
 STOP TERMINAL 3 AND TYPE THE FOLLOWING
 roslaunch turtlebot3_manipulation_navigation navigation.launch map_file:=$HOME/map.yaml
+(an example of a map of the turtlebot3_house.world is found in this repository in my_package/maps)
 
 IN RVIZ GIVE THE INITIAL POSE WITH THE 2D POSE ESTIMATION
 IN THE TERMINAL 2, WITH THE TELEOP YOU CAN IMPROVE THE REAL POSITION WHILE NAVIGATE. 
@@ -163,6 +165,7 @@ cd ~/catkin_ws && source /opt/ros/noetic/setup.bash && source devel/setup.bash &
 roslaunch turtlebot3_manipulation_gazebo turtlebot3_manipulation_gazebo.launch
 
 roslaunch turtlebot3_manipulation_navigation navigation.launch map_file:=$HOME/map.yaml
+(an example of a map of the turtlebot3_house.world is found in this repository in my_package/maps)
 
 roslaunch turtlebot3_manipulation_moveit_config move_group.launch
 
@@ -214,6 +217,7 @@ TERMINAL 2: roslaunch turtlebot3_manipulation_slam slam_rtab.launch
 TERMINAL 3: roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
 crtl+C in the TERMINAL 3 and after that: rtabmap-databaseViewer ~/rtabmap.db
+(an example of a map of the turtlebot3_house.world is found in this repository in my_package/maps)
 
 2- LOCALIZATION+NAVIGATION:
 

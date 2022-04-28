@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<launch>
+   
+    <arg name="localization" default="false"/>
+    <arg name="rtabmapviz"   default="true"/>
+    
+    <arg     if="$(arg localization)" name="pre_args" default=""/>
+    <arg unless="$(arg localization)" name="pre_args" default="-d"/>
+    
+    <!-- Send robot states to tf -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
+   
+    <node pkg="imu_complementary_filter" type="complementary_filter_node" name="imu_filter_node" output="screen">
+      <remap from="imu" to="body_imu"/>
+    </node> 
+    <node pkg="nodelet" type="nodelet" name="imu_to_tf" args="standalone rtabmap_ros/imu_to_tf">
+      <remap from="imu/data" to="/body_imu/data"/>
+      <param name="fixed_frame_id" value=""/>
+      <param name="base_frame_id" value="base_link"/>
+    </node>
+
+    <!-- To connect rtabmap planning stuff with move_base below -->
+    <param name="/rtabmap/rtabmap/use_action_for_goal" value="true"/>
+    <remap from="/rtabmap/move_base" to="/move_base"/>
+
+    <!-- VSLAM -->
+    <param name="/rtabmap/rtabmap/latch" value="false"/> <!-- For some reason, if we latch grid_map, the global costmap inflation layer will create holes on robot path. To avoid holes, republish grid_map on each update (latching disabled). -->
+    <include file="$(find rtabmap_ros)/launch/rtabmap.launch">
+      <arg name="database_path"     default="~/rtabmap.db"/>
+      <arg name="localization"      value="$(arg localization)"/>
+      <arg name="args"              value="$(arg pre_args) --Optimizer/GravitySigma 0.1 --Vis/FeatureType 10 --Kp/DetectorStrategy 10 --Grid/MapFrameProjection true --NormalsSegmentation false --Grid/MaxGroundHeight 1 --Grid/MaxObstacleHeight 1.6 --RGBD/StartAtOrigin true" />
+      <arg name="rtabmapviz"        value="$(arg rtabmapviz)" /> 
+      <arg name="frame_id"          value="base_link" />
+      <arg name="odom_guess_frame_id" value="" />
+      <arg name="rgb_topic"         value="/camera/color/image_raw" />
+      <arg name="depth_topic"       value="/camera/depth/image_raw" />
+      <arg name="camera_info_topic" value="/camera/color/camera_info" />
+      <arg name="imu_topic"         value="/imu"/>
+      <arg name="wait_imu_to_init"  value="true"/>
+      <arg name="approx_sync"       value="true"/>
+    </include>
+    
+    <!-- Costmap -->
+    <node pkg="nodelet" type="nodelet" name="camera_points_xyz" args="standalone rtabmap_ros/point_cloud_xyz">
+      <remap from="depth/image"       to="/camera/depth/image_raw"/>
+      <remap from="depth/camera_info" to="/camera/depth/camera_info"/>
+      <remap from="cloud"             to="camera_cloud" />
+
+      <param name="decimation"  type="double" value="4"/>
+      <param name="voxel_size"  type="double" value="0.0"/>
+      <param name="approx_sync" type="bool"   value="true"/>
+    </node> 
+
+  <!-- move_base -->
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>
+  <arg name="move_forward_only" default="false"/>
+  <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
+    <arg name="model" value="$(arg model)" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
+  
+   <node name="empty_voxels_markers" pkg="rtabmap_ros" type="voxel_markers" args="voxel_grid:=/move_base/local_costmap/voxel_layer/voxel_grid visualization_marker:=/voxels_empty">
+       <param name="cell_type" value="0"/>
+   </node>
+   <node name="marked_voxels_markers" pkg="rtabmap_ros" type="voxel_markers" args="voxel_grid:=/move_base/local_costmap/voxel_layer/voxel_grid visualization_marker:=/voxels_marked" />
+
+    <!-- rviz -->
+    <arg name="open_rviz" default="true"/>
+  <group if="$(arg open_rviz)"> 
+    <node pkg="rviz" type="rviz" name="rviz" required="true"
+          args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_navigation.rviz"/>
+  </group>
+  
+</launch>
