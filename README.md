@@ -211,7 +211,9 @@ TERMINAL 1 (remember to play gazebo): roslaunch turtlebot3_manipulation_gazebo t
 
 TERMINAL 2: roslaunch turtlebot3_manipulation_slam slam_rtab.launch
 
-crtl+C in the TERMINAL 2 and after that: rtabmap-databaseViewer ~/rtabmap.db
+TERMINAL 3: roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+crtl+C in the TERMINAL 3 and after that: rtabmap-databaseViewer ~/rtabmap.db
 
 2- LOCALIZATION+NAVIGATION:
 
