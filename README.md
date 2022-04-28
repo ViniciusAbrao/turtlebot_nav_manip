@@ -232,6 +232,27 @@ TERMINAL 1 (remember to play gazebo): roslaunch turtlebot3_manipulation_gazebo t
 TERMINAL 2 (add display -> rtabmap_ros -> MapCloud, after click in Download map): 
 roslaunch turtlebot3_manipulation_slam nav_rtab.launch localization:=true
 
+2- VISUAL ODOMETRY:
+
+- IN THE FILE:
+~/catkin_ws/src/turtlebot3_manipulation_simulations/turtlebot3_manipulation_gazebo/launch/turtlebot3_manipulation_gazebo.launch
+CHANGE LINE 10 WITHIN < >:
+  arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/apt.world"/
+CHANGE THE LINE 24:
+    args="-urdf -param robot_description -model robot -x -0.0 -y 0.0 -Y 0.0 -J joint1 0.0 -J joint2 0.0 -J joint3 0.0 -J joint4 0.0 -J gripper 0.0 -J gripper_sub 0.0"/>
+SAVE AND CLOSE THE FILE.
+
+- INSIDE THE FOLDER catkin_ws/src/turtlebot3_simulations/turtlebot3_gazebo, COPY THE APT WORLD AND MODEL FILES FOUND IN THIS REPOSITORY IN my_package.
+
+TERMINAL 1 (remember to play gazebo): roslaunch turtlebot3_manipulation_gazebo turtlebot3_manipulation_gazebo.launch
+
+TERMINAL 2: roslaunch turtlebot3_manipulation_slam vo_rtab.launch (ONLY FOR SLAM)
+or
+roslaunch turtlebot3_manipulation_slam vo_nav_rtab.launch localization:=true (TRUE FOR LOCALIZATION, FALSE FOR SLAM)
+
+TERMINAL 3: roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+
+crtl+C in the TERMINAL 3 and after that, to save the map: rtabmap-databaseViewer ~/rtabmap.db
 ____________________________________________________________________________________________________________________________________
 
 MY_OBJECT_RECOGNITION: SIMULATION OF PR2 AND YOLO 
