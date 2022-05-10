@@ -216,7 +216,8 @@ TERMINAL 2: roslaunch turtlebot3_manipulation_slam slam_rtab.launch
 
 TERMINAL 3: roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
-crtl+C in the TERMINAL 3 and after that: rtabmap-databaseViewer ~/rtabmap.db
+The default location of the RTAB-Map database is "~/.ros/rtabmap.db". Change the parameter "database_path" in case of to save in another path.
+In order to visualize the content of this database: rtabmap-databaseViewer ~/rtabmap.db
 An example of a map of the turtlebot3_house.world is found at:
  https://drive.google.com/file/d/13-oGLLWr7zB9ZfORsgDQ1qQZ7Tay6SSR/view?usp=sharing
 
@@ -257,7 +258,9 @@ roslaunch turtlebot3_manipulation_slam vo_nav_rtab.launch localization:=true (TR
 
 TERMINAL 3: roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 
-crtl+C in the TERMINAL 3 and after that, to save the map: rtabmap-databaseViewer ~/rtabmap.db
+The map is saved automatically. The default location of the RTAB-Map database is "~/.ros/rtabmap.db". 
+Change the parameter "database_path" in case of to save in another path.
+In order to visualize the content of this database: rtabmap-databaseViewer ~/rtabmap.db
 ____________________________________________________________________________________________________________________________________
 
 MY_OBJECT_RECOGNITION: SIMULATION OF PR2 AND YOLO 
