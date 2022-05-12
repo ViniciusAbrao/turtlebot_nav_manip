@@ -270,9 +270,6 @@ DOWNLOAD THE CONTENT OF THE src_my_object_recognition FOLDER AND PASTE INSIDE YO
 COMPILE THE PACKAGES WITH catkin_make
 
 TERMINAL 1 - PR2 SIMULATION: roslaunch pr2_tc_gazebo main_elephant_person.launch
-(the line 4 of this launch file must be changed to the topic /camera/rgb/image_raw, 
-also in the file simulation_ws/src/yolo_tc/darknet_ros/darknet_ros/config/ros.yaml)
-ps.: the wheights of YOLO are selected in the launch file, line 15 = darknet_ros/config/yolov2-tiny.yaml.
 
 or
 
@@ -280,6 +277,9 @@ TERMINAL 1 - TURTLE SIMULATION (REMEMBER TO PLAY GAZEBO): roslaunch turtlebot3_m
 (in this case the topics are correct defined)
 
 TERMINAL 2: roslaunch my_object_recognition_pkg darknet_ros_3d.launch
+(the line 4 of this launch file must be changed to the topic /camera/rgb/image_raw, 
+also in the file simulation_ws/src/yolo_tc/darknet_ros/darknet_ros/config/ros.yaml)
+ps.: the wheights of YOLO are selected in the launch file, line 15 = darknet_ros/config/yolov2-tiny.yaml.
 
 Extract Position (must be improved):
 - rosrun my_object_recognition_pkg yolo_3d_data_extraction.py
