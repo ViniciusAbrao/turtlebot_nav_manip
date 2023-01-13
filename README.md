@@ -178,19 +178,9 @@ CHANGE THE TURTLEBOT3 WAFFLE-PI CAMERA TO RGBD
 REFERENCE - http://gazebosim.org/tutorials?tut=ros_gzplugins#DepthCamera
 
 COPY THE CAMERA PLUGIN CONTENT (LINES 147-187) OF THE FILE /my_package/urdf/turtlebot3_waffle_pi_for_open_manipulator.gazebo.xacro
-AND REPLACE IN THE FOLLOWING (MAKE A BACKUP OF THE ORIGINAL CONTENT IN CASE OF CHANGE BACK TO RGB):
+AND REPLACE IN THE FOLLOWING (MAKE A BACKUP OF THE ORIGINAL CONTENT IN CASE OF CHANGE BACK TO RGB - a copy is available in my_package/urdf directory):
 
 sudo gedit /opt/ros/noetic/share/turtlebot3_description/urdf/turtlebot3_waffle_pi_for_open_manipulator.gazebo.xacro
-
-____________________________________________________________________________________________________________________________________
-
-FOR USING WITH REAL RGBD CAMERA REALSENSE: 
-https://github.com/IntelRealSense/realsense-ros
-
-sudo apt-get install ros-$ROS_DISTRO-realsense2-camera
-
-SIMPLE LAUNCH: roslaunch realsense2_camera rs_camera.launch
-POINTCLOUDS LAUNCH: roslaunch realsense2_camera demo_pointcloud.launch
 
 ____________________________________________________________________________________________________________________________________
 
@@ -261,6 +251,39 @@ TERMINAL 3: roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
 The map is saved automatically. The default location of the RTAB-Map database is "~/.ros/rtabmap.db". 
 Change the parameter "database_path" in case of to save in another path.
 In order to visualize the content of this database: rtabmap-databaseViewer ~/rtabmap.db
+
+____________________________________________________________________________________________________________________________________
+
+FOR USING WITH REAL RGBD CAMERA REALSENSE: 
+https://github.com/IntelRealSense/realsense-ros
+
+sudo apt-get install ros-$ROS_DISTRO-realsense2-camera
+
+SIMPLE LAUNCH: roslaunch realsense2_camera rs_camera.launch
+POINTCLOUDS LAUNCH: roslaunch realsense2_camera demo_pointcloud.launch
+____________________________________________________________________________________________________________________________________
+
+RTABMAP - WITH REAL RGBD CAMERA REALSENSE: 
+
+Realsense: roslaunch realsense2_camera rs_camera.launch align_depth:=true
+
+Mapping: roslaunch rtabmap_ros rtabmap.launch \
+    rtabmap_args:="--delete_db_on_start" \
+    depth_topic:=/camera/aligned_depth_to_color/image_raw \
+    rgb_topic:=/camera/color/image_raw \
+    camera_info_topic:=/camera/color/camera_info \
+    approx_sync:=false
+
+Localization: roslaunch rtabmap_ros rtabmap.launch \
+    depth_topic:=/camera/aligned_depth_to_color/image_raw \
+    rgb_topic:=/camera/color/image_raw \
+    camera_info_topic:=/camera/color/camera_info \
+    approx_sync:=false \
+    localization:=true
+    
+Reference: http://wiki.ros.org/rtabmap_ros/Tutorials/HandHeldMapping
+The launch file used in this case is in the rtabmap_ros package. One copy of the original file
+is presented in the my_package/launch directory.
 ____________________________________________________________________________________________________________________________________
 
 MY_OBJECT_RECOGNITION: SIMULATION OF PR2 AND YOLO 
